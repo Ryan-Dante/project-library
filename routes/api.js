@@ -23,9 +23,10 @@ module.exports = function (app) {
     .get(async function (req, res){
       
       try {
-        const books = await Books.find();
-        if (books.length === 0) {
-          return res.json([ 'no books found' ]);
+        const books = await Books.find({});
+
+        if (!books) {
+          return res.json([]);
         }
 
         res.json(books.map(book => ({
@@ -35,7 +36,7 @@ module.exports = function (app) {
         })));
       } 
       catch (error) {
-        res.json({ error: 'could not retrieve books' });
+        res.json([{ error: 'could not retrieve books' }]);
       }
     })
     
